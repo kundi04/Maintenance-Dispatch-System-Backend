@@ -29,7 +29,8 @@ class LoginView(APIView):
             return Response({
                 'message': 'Login successful',
                 'role': user.role,
-                'username': user.username
+                'username': user.username,
+                'csrfToken': get_token(request),
             })
 
         return Response({'error': 'Invalid credentials'}, status=400)
