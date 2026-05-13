@@ -117,6 +117,11 @@ FRONTEND_URL = os.environ.get('FRONTEND_URL')
 if FRONTEND_URL:
     CORS_ALLOWED_ORIGINS.append(FRONTEND_URL)
 
+# Allow any Vercel preview/production deployment of this project
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF Settings
@@ -134,6 +139,9 @@ CSRF_TRUSTED_ORIGINS = [
 # Add production URLs from environment variable
 if FRONTEND_URL:
     CSRF_TRUSTED_ORIGINS.append(FRONTEND_URL)
+
+# Trust all Vercel deployments for CSRF (regex-style is supported in CSRF_TRUSTED_ORIGINS)
+CSRF_TRUSTED_ORIGINS.append('https://*.vercel.app')
 
 if RENDER_EXTERNAL_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
